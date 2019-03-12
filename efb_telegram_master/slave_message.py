@@ -62,6 +62,9 @@ class SlaveMessageProcessor(LocaleMixin):
             if tg_chat == ETMChat.MUTE_CHAT_ID:
                 self.logger.debug("[%s] Sender of the message is muted.", xid)
                 return msg
+            if msg.vendor_specific.get('is_mp', False):
+                self.logger.debug("[%s] Sender of the message is MP.", xid)
+                return msg
 
             multi_slaves = False
 

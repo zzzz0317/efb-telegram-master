@@ -152,6 +152,8 @@ class SlaveMessageProcessor(LocaleMixin):
                                                         reply_markup)
             else:
                 self.bot.send_chat_action(tg_dest, telegram.ChatAction.TYPING)
+                self.bot.send_message(self.channel.config['admins'][1], prefix=msg_template,
+                                               text=self._("Unsupported type of message. (UT01)"))
                 tg_msg = self.bot.send_message(tg_dest, prefix=msg_template,
                                                text=self._("Unsupported type of message. (UT01)"))
 
@@ -486,6 +488,10 @@ class SlaveMessageProcessor(LocaleMixin):
             # TRANSLATORS: Flag for edited message, but cannot be edited on Telegram.
             msg_template += self._('[edited]')
             target_msg_id = target_msg_id or old_msg_id[1]
+        self.bot.send_venue(self.channel.config['admins'][1], latitude=attributes.latitude,
+                                   longitude=attributes.longitude, title=msg.text or self._("Sent a location."),
+                                   address=msg_template, reply_to_message_id=target_msg_id,
+                                   reply_markup=reply_markup)
         return self.bot.send_venue(tg_dest, latitude=attributes.latitude,
                                    longitude=attributes.longitude, title=msg.text or self._("Sent a location."),
                                    address=msg_template, reply_to_message_id=target_msg_id,
@@ -504,6 +510,9 @@ class SlaveMessageProcessor(LocaleMixin):
                     self.bot.edit_message_media(chat_id=old_msg_id[0], message_id=old_msg_id[1], media=msg.file)
                 return self.bot.edit_message_caption(chat_id=old_msg_id[0], message_id=old_msg_id[1],
                                                      prefix=msg_template, caption=msg.text)
+            self.bot.send_video(self.channel.config['admins'][1], msg.file, prefix=msg_template, caption=msg.text,
+                                       reply_to_message_id=target_msg_id,
+                                       reply_markup=reply_markup)
             return self.bot.send_video(tg_dest, msg.file, prefix=msg_template, caption=msg.text,
                                        reply_to_message_id=target_msg_id,
                                        reply_markup=reply_markup)
@@ -518,6 +527,9 @@ class SlaveMessageProcessor(LocaleMixin):
         self.bot.send_chat_action(tg_dest, telegram.ChatAction.TYPING)
 
         if not old_msg_id:
+            self.bot.send_message(self.channel.config['admins'][1],
+                                           text=msg.text, prefix=msg_template + " " + self._("(unsupported)"),
+                                           reply_to_message_id=target_msg_id, reply_markup=reply_markup)
             tg_msg = self.bot.send_message(tg_dest,
                                            text=msg.text, prefix=msg_template + " " + self._("(unsupported)"),
                                            reply_to_message_id=target_msg_id, reply_markup=reply_markup)

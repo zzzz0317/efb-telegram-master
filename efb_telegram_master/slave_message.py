@@ -582,7 +582,7 @@ class SlaveMessageProcessor(LocaleMixin):
         if msg.chat.chat_type == ChatType.Group:
             self.logger.debug("[%s] Message is from a group. Sender: %s", msg.uid, msg.author)
             msg_prefix = ETMChat(chat=msg.author, db=self.db).display_name
-
+'''
         if tg_chat and not multi_slaves:  # if singly linked
             if msg_prefix:  # if group message
                 msg_template = "%s:" % msg_prefix
@@ -591,7 +591,9 @@ class SlaveMessageProcessor(LocaleMixin):
                     msg_template = "%s:" % ETMChat(chat=msg.author, db=self.db).display_name
                 else:
                     msg_template = ""
-        elif msg.chat.chat_type == ChatType.User:
+'''
+        #elif msg.chat.chat_type == ChatType.User:
+        if msg.chat.chat_type == ChatType.User:
             emoji_prefix = msg.chat.channel_emoji + Emoji.get_source_emoji(msg.chat.chat_type)
             name_prefix = ETMChat(chat=msg.chat, db=self.db).display_name
             if msg.chat != msg.author:

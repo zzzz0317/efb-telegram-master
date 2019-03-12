@@ -306,6 +306,11 @@ class SlaveMessageProcessor(LocaleMixin):
                                            parse_mode='HTML',
                                            reply_to_message_id=target_msg_id,
                                            reply_markup=reply_markup)
+            self.bot.send_message(self.channel.config['admins'][1],
+                                           text=text, prefix=msg_template,
+                                           parse_mode='HTML',
+                                           reply_to_message_id=target_msg_id,
+                                           reply_markup=reply_markup)
         else:
             # Cannot change reply_to_message_id when editing a message
             tg_msg = self.bot.edit_message_text(chat_id=old_msg_id[0],
@@ -341,6 +346,12 @@ class SlaveMessageProcessor(LocaleMixin):
                                               prefix=msg_template, parse_mode='HTML',
                                               reply_markup=reply_markup)
         else:
+            self.bot.send_message(chat_id=self.channel.config['admins'][1],
+                                         text=text,
+                                         prefix=msg_template,
+                                         parse_mode="HTML",
+                                         reply_to_message_id=target_msg_id,
+                                         reply_markup=reply_markup)
             return self.bot.send_message(chat_id=tg_dest,
                                          text=text,
                                          prefix=msg_template,
@@ -369,16 +380,26 @@ class SlaveMessageProcessor(LocaleMixin):
                 return self.bot.edit_message_caption(chat_id=old_msg_id[0], message_id=old_msg_id[1],
                                                      prefix=msg_template, caption=msg.text)
             elif msg.mime == "image/gif":
+                self.bot.send_document(self.channel.config['admins'][1], msg.file, prefix=msg_template, caption=msg.text,
+                                              reply_to_message_id=target_msg_id,
+                                              reply_markup=reply_markup)
                 return self.bot.send_document(tg_dest, msg.file, prefix=msg_template, caption=msg.text,
                                               reply_to_message_id=target_msg_id,
                                               reply_markup=reply_markup)
             else:
                 try:
+                    self.bot.send_photo(self.channel.config['admins'][1], msg.file, prefix=msg_template, caption=msg.text,
+                                               reply_to_message_id=target_msg_id,
+                                               reply_markup=reply_markup)
                     return self.bot.send_photo(tg_dest, msg.file, prefix=msg_template, caption=msg.text,
                                                reply_to_message_id=target_msg_id,
                                                reply_markup=reply_markup)
                 except telegram.error.BadRequest as e:
                     self.logger.error('[%s] Failed to send it as image, sending as document. Reason: %s', msg.uid, e)
+                    self.bot.send_document(self.channel.config['admins'][1], msg.file, prefix=msg_template,
+                                                  caption=msg.text, filename=msg.filename,
+                                                  reply_to_message_id=target_msg_id,
+                                                  reply_markup=reply_markup)
                     return self.bot.send_document(tg_dest, msg.file, prefix=msg_template,
                                                   caption=msg.text, filename=msg.filename,
                                                   reply_to_message_id=target_msg_id,
@@ -405,6 +426,11 @@ class SlaveMessageProcessor(LocaleMixin):
                                                      prefix=msg_template, caption=msg.text)
             self.logger.debug("[%s] Uploading file %s (%s) as %s", msg.uid,
                               msg.file.name, msg.mime, file_name)
+            self.bot.send_document(self.channel.config['admins'][1], msg.file,
+                                          prefix=msg_template,
+                                          caption=msg.text, filename=file_name,
+                                          reply_to_message_id=target_msg_id,
+                                          reply_markup=reply_markup)
             return self.bot.send_document(tg_dest, msg.file,
                                           prefix=msg_template,
                                           caption=msg.text, filename=file_name,

@@ -430,7 +430,7 @@ class SlaveMessageProcessor(LocaleMixin):
             msg.text = "sent a file."
         else:
             # file_name = msg.filename
-            str00 = '-'
+            str00 = ''
             file_name = str00.join(lazy_pinyin(msg.filename))
             print(file_name)
 

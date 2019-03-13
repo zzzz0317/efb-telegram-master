@@ -429,9 +429,9 @@ class SlaveMessageProcessor(LocaleMixin):
         #     msg.text = "sent a file."
         # else:
         #     file_name = msg.filename
-        msg.text = "sent a file."
-        file_name = "test"
-        
+        # msg.text = "sent a file."
+        file_name =  msg.filename
+
         try:
             if old_msg_id:
                 if msg.edit_media:

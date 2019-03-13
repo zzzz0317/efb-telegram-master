@@ -3,6 +3,7 @@
 import html
 import logging
 import os
+import re
 import tempfile
 import traceback
 import urllib.parse
@@ -431,7 +432,8 @@ class SlaveMessageProcessor(LocaleMixin):
         else:
             # file_name = msg.filename
             str00 = ''
-            file_name = str00.join(lazy_pinyin(msg.filename))
+            rule00 = re.compile("[^a-zA-Z0-9]")
+            file_name = rule00.sub('', str00.join(lazy_pinyin(msg.filename)))
 
         try:
             if old_msg_id:

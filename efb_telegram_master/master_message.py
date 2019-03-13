@@ -3,6 +3,7 @@
 import logging
 import mimetypes
 import os
+import re
 import tempfile
 import threading
 from typing import Tuple, IO, Optional, TYPE_CHECKING
@@ -336,7 +337,8 @@ class MasterMessageProcessor(LocaleMixin):
                                                                        message.document.mime_type)
                 # m.filename = m.filename or filename
                 str00 = ''
-                m.filename = str00.join(lazy_pinyin(m.filename))
+                rule00 = re.compile("[^a-zA-Z0-9]")
+                m.filename = rule00.sub('', str00.join(lazy_pinyin(m.filename)))
                 m.mime = message.document.mime_type or m.mime
             elif mtype == TGMsgType.Video:
                 m.type = MsgType.Video

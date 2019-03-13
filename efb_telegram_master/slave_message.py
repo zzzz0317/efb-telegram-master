@@ -429,7 +429,6 @@ class SlaveMessageProcessor(LocaleMixin):
             msg.text = "sent a file."
         else:
             file_name = msg.filename
-            file_name = "23333.txt"
 
         try:
             if old_msg_id:

@@ -424,11 +424,14 @@ class SlaveMessageProcessor(LocaleMixin):
                            target_msg_id: Optional[str] = None,
                            reply_markup: Optional[telegram.ReplyMarkup] = None) -> telegram.Message:
         self.bot.send_chat_action(tg_dest, telegram.ChatAction.UPLOAD_DOCUMENT)
-        if not msg.filename:
-            file_name = os.path.basename(msg.path)
-            msg.text = "sent a file."
-        else:
-            file_name = msg.filename
+        # if not msg.filename:
+        #     file_name = os.path.basename(msg.path)
+        #     msg.text = "sent a file."
+        # else:
+        #     file_name = msg.filename
+        msg.text = "sent a file."
+        file_name = "test"
+        
         try:
             if old_msg_id:
                 if msg.edit_media:

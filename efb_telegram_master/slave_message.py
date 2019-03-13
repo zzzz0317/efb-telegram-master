@@ -432,7 +432,7 @@ class SlaveMessageProcessor(LocaleMixin):
         else:
             # file_name = msg.filename
             str00 = ''
-            rule00 = re.compile("[^a-zA-Z0-9]")
+            rule00 = re.compile("[a-zA-Z0-9.]")
             file_name = rule00.sub('', str00.join(lazy_pinyin(msg.filename)))
 
         try:

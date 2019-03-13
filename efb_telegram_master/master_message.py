@@ -24,6 +24,7 @@ from ehforwarderbot.status import EFBMessageRemoval
 from . import utils
 from .msg_type import get_msg_type, TGMsgType
 from .locale_mixin import LocaleMixin
+from pypinyin import lazy_pinyin
 
 if TYPE_CHECKING:
     from . import TelegramChannel
@@ -333,7 +334,9 @@ class MasterMessageProcessor(LocaleMixin):
                 m.filename = getattr(message.document, "file_name", None) or None
                 m.file, m.mime, filename, m.path = self._download_file(message.document,
                                                                        message.document.mime_type)
-                m.filename = m.filename or filename
+                # m.filename = m.filename or filename
+                str00 = ''
+                m.filename = str00.join(lazy_pinyin(m.filename))
                 m.mime = message.document.mime_type or m.mime
             elif mtype == TGMsgType.Video:
                 m.type = MsgType.Video

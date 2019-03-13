@@ -24,7 +24,7 @@ from . import utils, ETMChat
 from .commands import ETMCommandMsgStorage
 from .constants import Emoji
 from .locale_mixin import LocaleMixin
-from pypinyin import pinyin, lazy_pinyin, Style
+from pypinyin import lazy_pinyin
 
 if TYPE_CHECKING:
     from . import TelegramChannel
@@ -432,7 +432,6 @@ class SlaveMessageProcessor(LocaleMixin):
             # file_name = msg.filename
             str00 = ''
             file_name = str00.join(lazy_pinyin(msg.filename))
-            print(file_name)
 
         try:
             if old_msg_id:

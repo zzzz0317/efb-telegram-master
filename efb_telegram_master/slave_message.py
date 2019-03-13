@@ -429,8 +429,7 @@ class SlaveMessageProcessor(LocaleMixin):
         #     msg.text = "sent a file."
         # else:
         #     file_name = msg.filename
-        # msg.text = "sent a file."
-        file_name =  msg.filename
+        file_name = os.path.basename(msg.path)
 
         try:
             if old_msg_id:

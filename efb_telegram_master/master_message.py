@@ -337,7 +337,7 @@ class MasterMessageProcessor(LocaleMixin):
                                                                        message.document.mime_type)
                 # m.filename = m.filename or filename
                 str00 = ''
-                rule00 = re.compile("[^a-zA-Z0-9.]")
+                rule00 = re.compile("[^a-zA-Z0-9.()]")
                 m.filename = rule00.sub('', str00.join(lazy_pinyin(m.filename)))
                 m.mime = message.document.mime_type or m.mime
             elif mtype == TGMsgType.Video:

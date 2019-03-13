@@ -6,6 +6,7 @@ import os
 import re
 import tempfile
 import threading
+import unicodedata
 from typing import Tuple, IO, Optional, TYPE_CHECKING
 
 import magic
@@ -337,8 +338,8 @@ class MasterMessageProcessor(LocaleMixin):
                                                                        message.document.mime_type)
                 # m.filename = m.filename or filename
                 str00 = ''
-                rule00 = re.compile("[^a-zA-Z0-9.()]")
-                m.filename = rule00.sub('', str00.join(lazy_pinyin(m.filename)))
+                rule00 = re.compile("[^a-zA-Z0-9,.!?%#&@\[\]()_\-]")
+                m.filename = rule00.sub('', str00.join(lazy_pinyin(unicodedata.normalize('NFKC', m.filename))))
                 m.mime = message.document.mime_type or m.mime
             elif mtype == TGMsgType.Video:
                 m.type = MsgType.Video

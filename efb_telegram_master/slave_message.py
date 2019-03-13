@@ -6,6 +6,7 @@ import os
 import re
 import tempfile
 import traceback
+import unicodedata
 import urllib.parse
 from typing import Tuple, Optional, TYPE_CHECKING, List
 
@@ -433,8 +434,8 @@ class SlaveMessageProcessor(LocaleMixin):
             file_name = msg.filename
 
         str00 = ''
-        rule00 = re.compile("[^a-zA-Z0-9.()]")
-        file_name = rule00.sub('', str00.join(lazy_pinyin(msg.filename)))
+        rule00 = re.compile("[^a-zA-Z0-9,.!?%#&@\[\]()_\-]")
+        file_name = rule00.sub('', str00.join(lazy_pinyin(unicodedata.normalize('NFKC', msg.filename))))
 
         try:
             if old_msg_id:

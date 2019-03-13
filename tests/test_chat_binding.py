@@ -104,7 +104,7 @@ class ChatBindingTest(StandardChannelTest):
             self.master.chat_binding.link_chat_confirm(self.bot, Update(0, callback_query=c))
             self.master.bot_manager.edit_message_text.assert_called()
             state_buttons = self.master.bot_manager.edit_message_text.call_args[1]['reply_markup'].inline_keyboard[0]
-            self.assertEqual(len(state_buttons), 3)
+            self.assertEqual(len(state_buttons), 2)
             self.master.bot_manager.reset_mock()
 
     # TODO: write test for the rest of the class

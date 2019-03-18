@@ -628,10 +628,13 @@ class SlaveMessageProcessor(LocaleMixin):
             name_prefix = ETMChat(chat=msg.chat, db=self.db).display_name
             if msg.chat != msg.author:
                 name_prefix += ", %s" % ETMChat(chat=msg.author, db=self.db).display_name
-                # loggertxt = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ' - ' + json.loads(str(self.bot.get_me()).replace("'", '"')).get['username'] + ' sent a message to ' + ETMChat(chat=msg.chat, db=self.db).display_name
-                loggertxt = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ' - ' + str(self.bot.get_me()) + ' sent a message to ' + ETMChat(chat=msg.chat, db=self.db).display_name
-                f = open('/var/zzlogger/efblog.txt', 'a')
-                f.write(str(loggertxt.encode("utf-8")) + "\n")
+                loggertxt = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ' - ' + str(self.bot.get_me().username) + ' Detected a message to ' + ETMChat(chat=msg.chat, db=self.db).display_name
+                loggercsv = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ',' + str(self.bot.get_me().username) + ',' + ETMChat(chat=msg.chat, db=self.db).display_name
+                f = open('/var/zzlogger/efblog.txt', 'a', encoding="utf8")
+                f.write(loggertxt.encode("utf8").decode("utf8") + "\n")
+                f.close()
+                f = open('/var/zzlogger/efblog.csv', 'a', encoding="utf8")
+                f.write(loggercsv.encode("utf8").decode("utf8") + "\n")
                 f.close()
             msg_template = "%s %s:" % (emoji_prefix, name_prefix)
         elif msg.chat.chat_type == ChatType.Group:

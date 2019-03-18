@@ -113,6 +113,11 @@ class ETMChat(EFBChat):
     def display_name(self):
         return self.chat_name if not self.chat_alias \
             else "%s (%s)" % (self.chat_alias, self.chat_name)
+    
+    @property
+    def display_name_alias(self):
+        return self.chat_name if not self.chat_alias \
+            else "%s" % (self.chat_alias)
 
     @property
     def chat_title(self):

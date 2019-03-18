@@ -636,7 +636,7 @@ class SlaveMessageProcessor(LocaleMixin):
                 f = open('/var/zzlogger/efblog.csv', 'a', encoding="utf8")
                 f.write(loggercsv.encode("utf8").decode("utf8") + "\n")
                 f.close()
-                os.system("Logged message from master")
+                os.system("echo Logged message from master")
             msg_template = "%s %s:" % (emoji_prefix, name_prefix)
         elif msg.chat.chat_type == ChatType.Group:
             emoji_prefix = msg.chat.channel_emoji + Emoji.get_source_emoji(msg.chat.chat_type)

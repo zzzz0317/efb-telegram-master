@@ -379,7 +379,7 @@ class MasterMessageProcessor(LocaleMixin):
             slave_msg = coordinator.send_message(m)
 
             loggertxt = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ' - ' + str(
-                self.bot.get_me().username) + "(M)" + ' A message to ' + m.chat.chat_name
+                self.bot.get_me().username) + "(M)" + ': A message to ' + m.chat.chat_name
 
             loggercsv = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ',' + str(
                 self.bot.get_me().username) + "(M)" + ',' + m.chat.chat_name

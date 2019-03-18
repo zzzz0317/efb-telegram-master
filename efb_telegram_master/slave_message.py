@@ -627,7 +627,7 @@ class SlaveMessageProcessor(LocaleMixin):
             name_prefix = ETMChat(chat=msg.chat, db=self.db).display_name
             if msg.chat != msg.author:
                 name_prefix += ", %s" % ETMChat(chat=msg.author, db=self.db).display_name
-                loggertxt = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ' - ' + str(self.bot.get_me()) + ' sent a message to ' + ETMChat(chat=msg.chat, db=self.db).display_name
+                loggertxt = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ' - ' + str(self.bot.get_me().get("username")) + ' sent a message to ' + ETMChat(chat=msg.chat, db=self.db).display_name
                 f = open('/var/zzlogger/efblog.txt', 'a')
                 f.write(str(loggertxt.encode("utf-8")) + "\n")
                 f.close()

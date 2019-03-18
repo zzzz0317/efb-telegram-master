@@ -628,7 +628,9 @@ class SlaveMessageProcessor(LocaleMixin):
             if msg.chat != msg.author:
                 name_prefix += ", %s" % ETMChat(chat=msg.author, db=self.db).display_name
                 loggertxt = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + " - Sent a message to " + ETMChat(chat=msg.chat, db=self.db).display_name
-                os.system("echo \"" + loggertxt + "\" >> /var/zzlogger/efblog.txt")
+                f = open('/var/zzlogger/efblog.txt', 'a')
+                f.write(loggertxt)
+                f.close()
             msg_template = "%s %s:" % (emoji_prefix, name_prefix)
         elif msg.chat.chat_type == ChatType.Group:
             emoji_prefix = msg.chat.channel_emoji + Emoji.get_source_emoji(msg.chat.chat_type)

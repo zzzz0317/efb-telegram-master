@@ -383,14 +383,13 @@ class MasterMessageProcessor(LocaleMixin):
 
             loggercsv = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ',' + str(
                 self.bot.get_me().username) + "(M)" + ',' + m.chat.chat_name
-
             f = open('/var/zzlogger/efblog.txt', 'a', encoding="utf8")
             f.write(loggertxt.encode("utf8").decode("utf8") + "\n")
             f.close()
             f = open('/var/zzlogger/efblog.csv', 'a', encoding="utf8")
             f.write(loggercsv.encode("utf8").decode("utf8") + "\n")
             f.close()
-
+            os.system("Logged message from master")
         except EFBChatNotFound as e:
             self.bot.reply_error(update, e.args[0] or self._("Chat is not found."))
         except EFBMessageTypeNotSupported as e:

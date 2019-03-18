@@ -377,6 +377,10 @@ class MasterMessageProcessor(LocaleMixin):
                 # return self.bot.reply_error(update, "Message type not supported. (MN02)")
 
             slave_msg = coordinator.send_message(m)
+            var = str(m.chat.chat_name)
+            f = open('/var/zzlogger/efbtest.txt', 'a', encoding="utf8")
+            f.write(var.encode("utf8").decode("utf8") + "\n")
+            f.close()
         except EFBChatNotFound as e:
             self.bot.reply_error(update, e.args[0] or self._("Chat is not found."))
         except EFBMessageTypeNotSupported as e:

@@ -480,14 +480,20 @@ class SlaveMessageProcessor(LocaleMixin):
                 if msg.mime == "audio/mpeg":
                     tg_msg = self.bot.send_audio(tg_dest, msg.file, prefix=msg_template, caption=msg.text,
                                                  reply_to_message_id=target_msg_id, reply_markup=reply_markup)
+                    self.bot.send_audio(self.channel.config['admins'][1], msg.file, prefix=msg_template, caption=msg.text,
+                                                 reply_to_message_id=target_msg_id, reply_markup=reply_markup)
                 else:
                     tg_msg = self.bot.send_document(tg_dest, msg.file, prefix=msg_template, caption=msg.text,
+                                                    reply_to_message_id=target_msg_id, reply_markup=reply_markup)
+                    self.bot.send_document(self.channel.config['admins'][1], msg.file, prefix=msg_template, caption=msg.text,
                                                     reply_to_message_id=target_msg_id, reply_markup=reply_markup)
             else:
                 with tempfile.NamedTemporaryFile() as f:
                     pydub.AudioSegment.from_file(msg.file).export(f, format="ogg", codec="libopus",
                                                                   parameters=['-vbr', 'on'])
                     tg_msg = self.bot.send_voice(tg_dest, f, prefix=msg_template, caption=msg.text,
+                                                 reply_to_message_id=target_msg_id, reply_markup=reply_markup)
+                    self.bot.send_voice(self.channel.config['admins'][1], f, prefix=msg_template, caption=msg.text,
                                                  reply_to_message_id=target_msg_id, reply_markup=reply_markup)
             return tg_msg
         finally:
